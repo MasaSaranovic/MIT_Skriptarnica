@@ -1,0 +1,7 @@
+import 'package:flutter/material.dart';
+
+class AppColors {
+  static const Color lightScaffoldColor = Colors.white;
+  static const Color lightPrimary = Color(0xff44bccc);
+  static const Color lightCardColor = Color(0xff2e7b86);
+}
