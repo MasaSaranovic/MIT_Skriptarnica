@@ -16,72 +16,123 @@ class ProfileScreen extends StatelessWidget {
           ),
           title: const Text("Profile Screen"),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Visibility(
-              visible: false,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TitlesTextWidget(
-                    label: "Please login to have unlimited access"),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Visibility(
+                visible: false,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TitlesTextWidget(
+                      label: "Please login to have unlimited access"),
+                ),
               ),
-            ),
-            Visibility(
-              visible: true,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).cardColor,
-                        border: Border.all(
-                            color: Theme.of(context).colorScheme.surface,
-                            width: 3),
-                        image: const DecorationImage(
-                            image: NetworkImage(
-                                "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"),
-                            fit: BoxFit.cover),
+              Visibility(
+                visible: true,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).cardColor,
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.surface,
+                              width: 3),
+                          image: const DecorationImage(
+                              image: NetworkImage(
+                                  "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"),
+                              fit: BoxFit.cover),
+                        ),
                       ),
+                      const SizedBox(width: 10),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitlesTextWidget(label: "Masa Saranovic"),
+                          SizedBox(height: 6),
+                          SubtitleTextWidget(label: "masa.saranovic@uns.ac.rs")
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    const TitlesTextWidget(label: "General"),
+                    const SizedBox(height: 10),
+                    CustomListTile(
+                        imagePath:
+                            "${AssetsManager.imagePath}/bag/checkout.png",
+                        text: "All Orders",
+                        function: () {}),
+                    CustomListTile(
+                        imagePath:
+                            "${AssetsManager.imagePath}/bag/wishlist.png",
+                        text: "Wishlist",
+                        function: () {}),
+                    CustomListTile(
+                        imagePath:
+                            "${AssetsManager.imagePath}/profile/repeat.png",
+                        text: "View recently",
+                        function: () {}),
+                    CustomListTile(
+                      imagePath: "${AssetsManager.imagePath}/address.png",
+                      text: "Address",
+                      function: () {},
                     ),
-                    const SizedBox(width: 10),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitlesTextWidget(label: "Masa Saranovic"),
-                        SizedBox(height: 6),
-                        SubtitleTextWidget(label: "masa.saranovic@uns.ac.rs")
-                      ],
-                    )
+                    const SizedBox(height: 10),
+                    const Divider(
+                      thickness: 2,
+                    ),
+                    const TitlesTextWidget(label: "Settings"),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const TitlesTextWidget(label: "General"),
-                  const SizedBox(height: 10),
-                  ListTile(
-                    onTap: () {},
-                    title: const SubtitleTextWidget(label: "All Orders"),
-                    leading: Image.asset(
-                        "${AssetsManager.imagePath}/bag/checkout.png",
-                        height: 34),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                  ),
-                ],
-              ),
-            ),
-          ],
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.login),
+                  label: const Text("Login"),
+                ),
+              )
+            ],
+          ),
         ));
+  }
+}
+
+class CustomListTile extends StatelessWidget {
+  const CustomListTile(
+      {super.key,
+      required this.imagePath,
+      required this.text,
+      required this.function});
+  final String imagePath, text;
+  final Function function;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        function();
+      },
+      title: SubtitleTextWidget(label: text),
+      leading: Image.asset(imagePath, height: 34),
+      trailing: const Icon(Icons.arrow_forward_ios_rounded),
+    );
   }
 }
