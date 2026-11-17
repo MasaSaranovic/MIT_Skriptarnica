@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skriptarnicaftn/consts/app_colors.dart';
 import 'package:skriptarnicaftn/consts/app_constants.dart';
 import 'package:skriptarnicaftn/screens/cart/quantity_btm_sheet.dart';
+import 'package:skriptarnicaftn/widgets/products/heart_btn.dart';
 import 'package:skriptarnicaftn/widgets/subtitle_text.dart';
 import 'package:skriptarnicaftn/widgets/title_text.dart';
 
@@ -52,12 +53,7 @@ class CartWidget extends StatelessWidget {
                                 color: AppColors.lightCardColor,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.favorite_border_outlined,
-                              ),
-                            ),
+                            const HeartButtonWidget(),
                           ],
                         ),
                       ],

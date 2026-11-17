@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:skriptarnicaftn/screens/inner_screen/view_recently.dart';
+import 'package:skriptarnicaftn/screens/inner_screen/wishlist.dart';
 import 'package:skriptarnicaftn/services/assets_manager.dart';
+import 'package:skriptarnicaftn/services/my_app_functions.dart';
 import 'package:skriptarnicaftn/widgets/subtitle_text.dart';
 import 'package:skriptarnicaftn/widgets/title_text.dart';
 
@@ -82,12 +85,17 @@ class ProfileScreen extends StatelessWidget {
                         imagePath:
                             "${AssetsManager.imagePath}/bag/wishlist.png",
                         text: "Wishlist",
-                        function: () {}),
+                        function: () {
+                          Navigator.pushNamed(context, WishlistScreen.routName);
+                        }),
                     CustomListTile(
                         imagePath:
                             "${AssetsManager.imagePath}/profile/repeat.png",
                         text: "View recently",
-                        function: () {}),
+                        function: () {
+                          Navigator.pushNamed(
+                              context, ViewedRecentlyScreen.routName);
+                        }),
                     CustomListTile(
                       imagePath: "${AssetsManager.imagePath}/address.png",
                       text: "Address",
@@ -104,7 +112,13 @@ class ProfileScreen extends StatelessWidget {
               ),
               Center(
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await MyAppFunctions.showErrorOrWarningDialog(
+                        context: context,
+                        subtitle: "Are you sure you want to sign out?",
+                        isError: false,
+                        fct: () {});
+                  },
                   icon: const Icon(Icons.login),
                   label: const Text("Login"),
                 ),

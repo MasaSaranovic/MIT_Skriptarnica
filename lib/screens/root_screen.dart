@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skriptarnicaftn/consts/app_colors.dart';
 import 'package:skriptarnicaftn/screens/cart/cart_screen.dart';
 import 'package:skriptarnicaftn/screens/home_screen.dart';
 import 'package:skriptarnicaftn/screens/profile_screen.dart';
@@ -13,7 +14,7 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   late List<Widget> screens;
-  int currentScreen = 1;
+  int currentScreen = 0;
   late PageController controller;
 
   @override
@@ -60,7 +61,11 @@ class _RootScreenState extends State<RootScreen> {
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.shopping_bag),
-              icon: Icon(Icons.shopping_bag_outlined),
+              icon: Badge(
+                backgroundColor: AppColors.lightCardColor,
+                label: Text("5"),
+                child: Icon(Icons.shopping_bag_outlined),
+              ),
               label: "Cart",
             ),
             NavigationDestination(

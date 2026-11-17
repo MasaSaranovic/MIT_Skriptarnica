@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:skriptarnicaftn/consts/app_colors.dart';
 import 'package:skriptarnicaftn/consts/app_constants.dart';
+import 'package:skriptarnicaftn/screens/inner_screen/product_details.dart';
+import 'package:skriptarnicaftn/widgets/products/heart_btn.dart';
 import 'package:skriptarnicaftn/widgets/subtitle_text.dart';
 import 'package:skriptarnicaftn/widgets/title_text.dart';
 
@@ -21,8 +21,8 @@ class _ProductWidgetState extends State<ProductWidget> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: GestureDetector(
-        onTap: () {
-          log("ToDo add the navigate to the product details screen");
+        onTap: () async {
+          await Navigator.pushNamed(context, ProductDetailsScreen.routName);
         },
         child: Column(
           children: [
@@ -49,12 +49,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                       maxLines: 2,
                     ),
                   ),
-                  Flexible(
+                  const Flexible(
                     flex: 2,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite_border_outlined),
-                    ),
+                    child: HeartButtonWidget(),
                   ),
                 ],
               ),
