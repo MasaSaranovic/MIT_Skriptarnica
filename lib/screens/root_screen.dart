@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skriptarnicaftn/consts/app_colors.dart';
+import 'package:skriptarnicaftn/providers/cart_provider.dart';
 import 'package:skriptarnicaftn/screens/cart/cart_screen.dart';
 import 'package:skriptarnicaftn/screens/home_screen.dart';
 import 'package:skriptarnicaftn/screens/profile_screen.dart';
 import 'package:skriptarnicaftn/screens/search_screen.dart';
 
 class RootScreen extends StatefulWidget {
+  static const routeName = "/RootScreen";
   const RootScreen({super.key});
 
   @override
@@ -31,6 +34,7 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
@@ -48,27 +52,27 @@ class _RootScreenState extends State<RootScreen> {
             });
             controller.jumpToPage(currentScreen);
           },
-          destinations: const [
-            NavigationDestination(
+          destinations: [
+            const NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
-            NavigationDestination(
+            const NavigationDestination(
               selectedIcon: Icon(Icons.search),
               icon: Icon(Icons.search_outlined),
               label: "Search",
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.shopping_bag),
+              selectedIcon: const Icon(Icons.shopping_bag),
               icon: Badge(
                 backgroundColor: AppColors.lightCardColor,
-                label: Text("5"),
-                child: Icon(Icons.shopping_bag_outlined),
+                label: Text(cartProvider.getCartitems.length.toString()),
+                child: const Icon(Icons.shopping_bag_outlined),
               ),
               label: "Cart",
             ),
-            NavigationDestination(
+            const NavigationDestination(
               selectedIcon: Icon(Icons.person),
               icon: Icon(Icons.person_outlined),
               label: "Profile",

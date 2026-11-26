@@ -1,5 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skriptarnicaftn/providers/viewed_recently_provider.dart';
 import 'package:skriptarnicaftn/services/assets_manager.dart';
 import 'package:skriptarnicaftn/widgets/empty_bag.dart';
 import 'package:skriptarnicaftn/widgets/products/product_widget.dart';
@@ -11,7 +13,8 @@ class ViewedRecentlyScreen extends StatelessWidget {
   final bool isEmpty = false;
   @override
   Widget build(BuildContext context) {
-    return isEmpty
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    return viewedProdProvider.getViewedProds.isEmpty
         ? Scaffold(
             body: EmptyBagWidget(
               imagePath: "${AssetsManager.imagePath}/bag/checkout.png",
@@ -28,7 +31,9 @@ class ViewedRecentlyScreen extends StatelessWidget {
                   "${AssetsManager.imagePath}/bag/checkout.png",
                 ),
               ),
-              title: const TitlesTextWidget(label: "Viewed recently (6)"),
+              title: TitlesTextWidget(
+                  label:
+                      "Viewed recently (${viewedProdProvider.getViewedProds.length})"),
               actions: [
                 IconButton(
                   onPressed: () {},
@@ -42,9 +47,16 @@ class ViewedRecentlyScreen extends StatelessWidget {
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
               builder: (context, index) {
-                return const ProductWidget();
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ProductWidget(
+                    productId: viewedProdProvider.getViewedProds.values
+                        .toList()[index]
+                        .productId,
+                  ),
+                );
               },
-              itemCount: 200,
+              itemCount: viewedProdProvider.getViewedProds.length,
               crossAxisCount: 2,
             ),
           );

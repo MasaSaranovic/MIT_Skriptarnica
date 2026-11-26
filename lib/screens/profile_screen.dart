@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skriptarnicaftn/screens/inner_screen/orders/orders_screen.dart';
 import 'package:skriptarnicaftn/screens/inner_screen/view_recently.dart';
 import 'package:skriptarnicaftn/screens/inner_screen/wishlist.dart';
 import 'package:skriptarnicaftn/services/assets_manager.dart';
@@ -80,7 +81,9 @@ class ProfileScreen extends StatelessWidget {
                         imagePath:
                             "${AssetsManager.imagePath}/bag/checkout.png",
                         text: "All Orders",
-                        function: () {}),
+                        function: () {
+                          Navigator.pushNamed(context, OrdersScreen.routeName);
+                        }),
                     CustomListTile(
                         imagePath:
                             "${AssetsManager.imagePath}/bag/wishlist.png",

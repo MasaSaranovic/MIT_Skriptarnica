@@ -1,7 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skriptarnicaftn/consts/app_colors.dart';
-import 'package:skriptarnicaftn/consts/app_constants.dart';
+import 'package:skriptarnicaftn/models/product_model.dart';
+import 'package:skriptarnicaftn/providers/cart_provider.dart';
+import 'package:skriptarnicaftn/providers/viewed_recently_provider.dart';
 import 'package:skriptarnicaftn/screens/inner_screen/product_details.dart';
 import 'package:skriptarnicaftn/widgets/products/heart_btn.dart';
 import 'package:skriptarnicaftn/widgets/subtitle_text.dart';
@@ -12,11 +15,18 @@ class LatestArrivalProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () async {
-          await Navigator.pushNamed(context, ProductDetailsScreen.routName);
+          viewedProdProvider.addOrRemoveFromViewedProd(
+            productId: productModel.productId,
+          );
+          Navigator.pushNamed(context, ProductDetailsScreen.routName,
+              arguments: productModel.productId);
         },
         child: SizedBox(
           width: size.width * 0.45,
@@ -27,7 +37,7 @@ class LatestArrivalProductsWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.0),
                   child: FancyShimmerImage(
-                    imageUrl: AppConstants.imageUrl,
+                    imageUrl: productModel.productImage,
                     height: size.width * 0.24,
                     width: size.width * 0.32,
                   ),
@@ -43,7 +53,7 @@ class LatestArrivalProductsWidget extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Title" * 15,
+                      productModel.productTitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -53,11 +63,26 @@ class LatestArrivalProductsWidget extends StatelessWidget {
                     FittedBox(
                       child: Row(
                         children: [
-                          const HeartButtonWidget(),
+                          HeartButtonWidget(
+                            productId: productModel.productId,
+                          ),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.add_shopping_cart,
+                            onPressed: () {
+                              if (cartProvider.isProdinCart(
+                                  productId: productModel.productId)) {
+                                return;
+                              }
+                              cartProvider.addProductToCart(
+                                productId: productModel.productId,
+                              );
+                            },
+                            icon: Icon(
+                              cartProvider.isProdinCart(
+                                      productId: productModel.productId)
+                                  ? Icons.check
+                                  : Icons.add_shopping_cart_outlined,
+                              size: 20,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -66,9 +91,9 @@ class LatestArrivalProductsWidget extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const FittedBox(
+                    FittedBox(
                       child: SubtitleTextWidget(
-                        label: "1550.00 RSD",
+                        label: "${productModel.productPrice} RSD",
                         fontWeight: FontWeight.w600,
                         color: AppColors.lightCardColor,
                       ),

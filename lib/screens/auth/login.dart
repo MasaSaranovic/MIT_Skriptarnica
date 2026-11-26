@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:skriptarnicaftn/consts/validator.dart';
+import 'package:skriptarnicaftn/screens/auth/forgot_password.dart';
 import 'package:skriptarnicaftn/screens/auth/register.dart';
+import 'package:skriptarnicaftn/screens/root_screen.dart';
 import 'package:skriptarnicaftn/services/assets_manager.dart';
 import 'package:skriptarnicaftn/widgets/auth/google_btn.dart';
 import 'package:skriptarnicaftn/widgets/subtitle_text.dart';
 import 'package:skriptarnicaftn/widgets/title_text.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = "/LoginScreen";
   const LoginScreen({super.key});
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -153,7 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(ForgotPasswordScreen.routeName);
+                          },
                           child: const SubtitleTextWidget(
                             label: "Forgot password?",
                             fontStyle: FontStyle.italic,
@@ -222,7 +228,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   child: const Text("Guest?"),
-                                  onPressed: () async {},
+                                  onPressed: () async {
+                                    Navigator.of(context)
+                                        .pushNamed(RootScreen.routeName);
+                                  },
                                 ),
                               ),
                             ),
